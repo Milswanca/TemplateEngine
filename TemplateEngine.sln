@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TemplateGame", "TemplateGame\TemplateGame.vcxproj", "{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Template", "Template\Template.vcxproj", "{228D3E3B-3537-4704-A785-9FED084E1627}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		DebugEditor|x64 = DebugEditor|x64
+		Release|x64 = Release|x64
+		ReleaseEditor|x64 = ReleaseEditor|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.Debug|x64.ActiveCfg = Debug|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.Debug|x64.Build.0 = Debug|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.DebugEditor|x64.ActiveCfg = DebugEditor|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.DebugEditor|x64.Build.0 = DebugEditor|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.Release|x64.ActiveCfg = Release|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.Release|x64.Build.0 = Release|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.ReleaseEditor|x64.ActiveCfg = ReleaseEditor|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.ReleaseEditor|x64.Build.0 = ReleaseEditor|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.Debug|x64.ActiveCfg = Debug|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.Debug|x64.Build.0 = Debug|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.DebugEditor|x64.ActiveCfg = DebugEditor|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.DebugEditor|x64.Build.0 = DebugEditor|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.Release|x64.ActiveCfg = Release|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.Release|x64.Build.0 = Release|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.ReleaseEditor|x64.ActiveCfg = ReleaseEditor|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.ReleaseEditor|x64.Build.0 = ReleaseEditor|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B32B592-4C0B-4603-A75D-4F7A8D501651}
+	EndGlobalSection
+EndGlobal
