@@ -398,4 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Allow Deps Binaries
-!Template/Deps/
+!Template/Deps/Libs/*
