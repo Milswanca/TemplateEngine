@@ -2,6 +2,7 @@
 #include "Rendering/RHI/Resources/RHIShader.h"
 #include "Rendering/RHI/Resources/RHIShaderProgram.h"
 #include "Rendering/RHI/Resources/RHITexture.h"
+#include "Rendering/RHI/Resources/RHIVertexLayout.h"
 #include <glm/glm.hpp>
 #include <string_view>
 
@@ -18,6 +19,9 @@ public:
 	virtual RHITexture* CreateTexture(const CreateTextureDesc& InDesc) = 0;
 	virtual void SetTexturePixels(RHITexture* InTexture, unsigned char* InRawMemory) = 0;
 	virtual void DestroyTexture(RHITexture* InTexture) = 0;
+
+	virtual RHIVertexLayout* CreateVertexLayout() = 0;
+	virtual void BindVertexLayout(RHIVertexLayout* InLayout) = 0;
 };
 
 template<typename ToType = RHIResource>

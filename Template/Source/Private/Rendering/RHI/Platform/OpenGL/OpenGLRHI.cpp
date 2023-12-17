@@ -41,6 +41,8 @@ void OpenGLRHI::SetOpenGLShaderSource(OpenGLShader* InShader, std::string_view I
 
 void OpenGLRHI::DeleteShader(RHIShader* InShader)
 {
+	delete InShader;
+	InShader = nullptr;
 }
 
 RHITexture* OpenGLRHI::CreateTexture(const CreateTextureDesc& InDesc)

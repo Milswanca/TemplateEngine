@@ -1,4 +1,4 @@
-#include "Rendering/Mesh.h"
+#include "Rendering/Assets/Mesh.h"
 #include "Core/Engine.h"
 #include <glad/glad.h>
 
