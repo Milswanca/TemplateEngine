@@ -22,7 +22,7 @@ void Object::End()
 
 }
 
-IRendererImmediate* Object::GetImmediateRenderer() const
+IRHI* Object::GetImmediateRenderer() const
 {
 	return GetEngine()->GetImmediateRenderer();
 }

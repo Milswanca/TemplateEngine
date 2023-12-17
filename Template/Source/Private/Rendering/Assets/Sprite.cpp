@@ -14,7 +14,7 @@ Sprite* Sprite::Create(const std::string& InFile)
 Sprite* Sprite::Create(unsigned int InWidth, unsigned int InHeight)
 {
 	Sprite* NewSprite = Engine::Get()->NewObject<Sprite>();
-	NewSprite->m_Texture = Texture2D::Create(InWidth, InHeight, Texture::ETextureFormats::RGBA8);
+	NewSprite->m_Texture = Texture2D::Create(InWidth, InHeight, RHITexture::ETextureFormats::RGBA8);
 	return NewSprite;
 }
 

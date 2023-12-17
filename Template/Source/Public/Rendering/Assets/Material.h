@@ -4,8 +4,8 @@
 #include <glm/glm.hpp>
 #include <unordered_map>
 
-class Shader;
-class Texture;
+class RHIShaderProgram;
+class RHITexture;
 
 class Material : public Object
 {
@@ -30,7 +30,7 @@ public:
 	typedef std::unordered_map<std::string, Material::CachedParameter*> MaterialParameterMap;
 
 public:
-	static Material* Create(Shader* InShader);
+	static Material* Create(RHIShaderProgram* InShader);
 
 protected:
 	IMPLEMENT_CONSTRUCTOR(Material, Object);
@@ -47,7 +47,7 @@ public:
 	void SetVector3(const std::string& InName, const glm::vec3& InValue);
 	void SetVector4(const std::string& InName, const glm::vec4& InValue);
 	void SetMat4(const std::string& InName, const glm::mat4& InValue);
-	void SetTexture(const std::string& InName, Texture* InValue);
+	void SetTexture(const std::string& InName, RHITexture* InValue);
 
 	bool GetInt(const std::string& InName, int& OutValue) const;
 	bool GetFloat(const std::string& InName, float& OutValue) const;
@@ -55,10 +55,10 @@ public:
 	bool GetVector3(const std::string& InName, glm::vec3& OutValue) const;
 	bool GetVector4(const std::string& InName, glm::vec4& OutValue) const;
 	bool GetMat4(const std::string& InName, glm::mat4& OutValue) const;
-	bool GetTexture(const std::string& InName, Texture*& OutValue) const;
+	bool GetTexture(const std::string& InName, RHITexture*& OutValue) const;
 
-	void SetShader(Shader* InShader);
-	Shader* GetShader() const;
+	void SetShader(RHIShaderProgram* InShader);
+	RHIShaderProgram* GetShader() const;
 
 private:
 	CachedParameter* GetCachedParameter(std::string InName) const;
@@ -68,10 +68,10 @@ private:
 	void BindTextures();
 	void UnbindTextures();
 
-	Texture* m_Textures[32];
+	RHITexture* m_Textures[32];
 	std::string m_TextureParamNames[32];
 	unsigned int m_NumTextureParams = 0;
 
-	Shader* m_Shader;
+	RHIShaderProgram* m_Shader;
 	MaterialParameterMap m_Parameters;
 };

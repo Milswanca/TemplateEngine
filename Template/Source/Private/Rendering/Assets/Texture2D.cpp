@@ -1,4 +1,7 @@
-#include "Rendering/Texture2D.h"
+#include "Rendering/Resources/Texture2D.h"
+
+#if RENDERER_OPENGL
+
 #include "Core/Engine.h"
 #include "Utils/FileUtils.h"
 #include "SOIL/SOIL.h"
@@ -72,3 +75,5 @@ void Texture2D::Build()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	}
 }
+
+#endif

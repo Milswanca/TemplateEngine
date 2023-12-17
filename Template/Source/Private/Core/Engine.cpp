@@ -54,7 +54,7 @@ Engine* Engine::Get()
 	return s_Inst;
 }
 
-IRendererImmediate* Engine::GetImmediateRenderer() const
+IRHI* Engine::GetImmediateRenderer() const
 {
 	return m_RendererImmediate;
 }

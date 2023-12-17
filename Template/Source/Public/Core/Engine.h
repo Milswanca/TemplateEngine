@@ -6,7 +6,7 @@
 struct GLFWwindow;
 class Object;
 class World;
-class IRendererImmediate;
+class IRHI;
 
 #define IMPLEMENT_MAIN(screenWidth, screenHeight, screenTitle, applicationClass) \
 	int main() \
@@ -40,7 +40,7 @@ public:
 	virtual void Shutdown();
 
 	virtual World* GetWorld() const;
-	IRendererImmediate* GetImmediateRenderer() const;
+	IRHI* GetImmediateRenderer() const;
 	GLFWwindow* GetMainWindow() const;
 
 	template<typename T>
@@ -67,7 +67,7 @@ public:
 private:
 	std::vector<Object*> m_Objects;
 
-	IRendererImmediate* m_RendererImmediate;
+	IRHI* m_RendererImmediate;
 	World* m_CurrentWorld;
 	GLFWwindow* m_MainWindow;
 	static Engine* s_Inst;

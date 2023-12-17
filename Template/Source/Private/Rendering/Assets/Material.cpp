@@ -1,11 +1,11 @@
 #include "Rendering/Material.h"
-#include "Rendering/Shader.h"
+#include "Rendering/ShaderProgram.h"
 #include "Rendering/Texture.h"
 #include "Core/Engine.h"
 #include <glm/fwd.hpp>
 #include <glm/ext/matrix_transform.inl>
 
-Material* Material::Create(Shader* InShader)
+Material* Material::Create(RHIShaderProgram* InShader)
 {
 	Material* NewMaterial = Engine::Get()->NewObject<Material>();
 	NewMaterial->SetShader(InShader);
@@ -180,7 +180,7 @@ void Material::SetMat4(const std::string& InName, const glm::mat4& InValue)
 	Param->m_Type = ParameterTypes::Mat4;
 }
 
-void Material::SetTexture(const std::string& InName, Texture* InValue)
+void Material::SetTexture(const std::string& InName, RHITexture* InValue)
 {
 	int Index = FindTextureParamIndex(InName);
 	if (Index != -1)
@@ -264,7 +264,7 @@ bool Material::GetMat4(const std::string& InName, glm::mat4& OutValue) const
 	return false;
 }
 
-bool Material::GetTexture(const std::string& InName, Texture*& OutValue) const
+bool Material::GetTexture(const std::string& InName, RHITexture*& OutValue) const
 {
 	int Index = FindTextureParamIndex(InName);
 
@@ -276,12 +276,12 @@ bool Material::GetTexture(const std::string& InName, Texture*& OutValue) const
 	return Index != -1;
 }
 
-void Material::SetShader(Shader* InShader)
+void Material::SetShader(RHIShaderProgram* InShader)
 {
 	m_Shader = InShader;
 }
 
-Shader* Material::GetShader() const
+RHIShaderProgram* Material::GetShader() const
 {
 	return m_Shader;
 }

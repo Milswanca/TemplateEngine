@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugEditor|x64">
@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShaderProgram.cpp" />
     <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\Private\Actors\CameraActor.cpp" />
     <ClCompile Include="Source\Private\Actors\SpriteActor.cpp" />
@@ -31,20 +32,24 @@
     <ClCompile Include="Source\Private\Core\Object.cpp" />
     <ClCompile Include="Source\Private\Core\World.cpp" />
     <ClCompile Include="Source\Private\Math\Transform.cpp" />
-    <ClCompile Include="Source\Private\Rendering\IRendererImmediate.cpp" />
-    <ClCompile Include="Source\Private\Rendering\Material.cpp" />
-    <ClCompile Include="Source\Private\Rendering\Mesh.cpp" />
-    <ClCompile Include="Source\Private\Rendering\RendererImmediateGL.cpp" />
-    <ClCompile Include="Source\Private\Rendering\Shader.cpp" />
-    <ClCompile Include="Source\Private\Rendering\Sprite.cpp" />
-    <ClCompile Include="Source\Private\Rendering\Texture.cpp" />
-    <ClCompile Include="Source\Private\Rendering\Texture2D.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\RHI.cpp" />
+    <ClCompile Include="Source\Private\Rendering\Assets\Material.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShader.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLTexture.cpp" />
+    <ClCompile Include="Source\Private\Rendering\Assets\Sprite.cpp" />
+    <ClCompile Include="Source\Private\Rendering\Utils\ShaderUtils.cpp" />
     <ClCompile Include="Source\Private\Utils\Delegate.cpp" />
     <ClCompile Include="Source\Private\Utils\FilePath.cpp" />
     <ClCompile Include="Source\Private\Utils\FileUtils.cpp" />
     <ClCompile Include="Source\Private\Utils\StringUtils.cpp" />
+    <ClCompile Include="Source\Public\Rendering\RHI\Resources\RHIShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Private\Rendering\RHI\Platform\OpenGL\OpenGLRHI.cpp" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\OpenGLRHI.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShaderProgram.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLTexture.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIResource.h" />
     <ClInclude Include="Source\Public\Actors\CameraActor.h" />
     <ClInclude Include="Source\Public\Actors\SpriteActor.h" />
     <ClInclude Include="Source\Public\Components\CameraComponent.h" />
@@ -56,14 +61,15 @@
     <ClInclude Include="Source\Public\Core\Object.h" />
     <ClInclude Include="Source\Public\Core\World.h" />
     <ClInclude Include="Source\Public\Math\Transform.h" />
-    <ClInclude Include="Source\Public\Rendering\IRendererImmediate.h" />
-    <ClInclude Include="Source\Public\Rendering\Material.h" />
-    <ClInclude Include="Source\Public\Rendering\Mesh.h" />
-    <ClInclude Include="Source\Public\Rendering\RendererImmediateGL.h" />
-    <ClInclude Include="Source\Public\Rendering\Shader.h" />
-    <ClInclude Include="Source\Public\Rendering\Sprite.h" />
-    <ClInclude Include="Source\Public\Rendering\Texture.h" />
-    <ClInclude Include="Source\Public\Rendering\Texture2D.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIShaderProgram.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHITexture.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\RHI.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShader.h" />
+    <ClInclude Include="Source\Public\Rendering\Assets\Material.h" />
+    <ClInclude Include="Source\Public\Rendering\Assets\Mesh.h" />
+    <ClInclude Include="Source\Public\Rendering\Assets\Sprite.h" />
+    <ClInclude Include="Source\Public\Rendering\Assets\Texture2D.h" />
+    <ClInclude Include="Source\Public\Rendering\Utils\ShaderUtils.h" />
     <ClInclude Include="Source\Public\Template2DCore.h" />
     <ClInclude Include="Source\Public\Utils\Delegate.h" />
     <ClInclude Include="Source\Public\Utils\FilePath.h" />
@@ -138,6 +144,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -153,6 +160,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -170,6 +178,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -189,6 +198,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>

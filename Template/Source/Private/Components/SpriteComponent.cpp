@@ -2,7 +2,7 @@
 #include "Components/CameraComponent.h"
 #include "Core/Engine.h"
 #include "Rendering/Sprite.h"
-#include "Rendering/IRendererImmediate.h"
+#include "Rendering/IRHI.h"
 
 void SpriteComponent::Begin()
 {

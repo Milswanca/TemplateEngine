@@ -2,7 +2,7 @@
 
 class Engine;
 class World;
-class IRendererImmediate;
+class IRHI;
 
 #define IMPLEMENT_CONSTRUCTOR(className, baseClass) \
     className() = delete; \
@@ -21,7 +21,7 @@ protected:
 	virtual void End();
 
 	Engine* GetEngine() const;
-	IRendererImmediate* GetImmediateRenderer() const;
+	IRHI* GetImmediateRenderer() const;
 	virtual World* GetWorld() const;
 	virtual Object* GetOuter() const;
 

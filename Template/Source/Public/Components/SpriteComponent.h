@@ -3,7 +3,7 @@
 
 class Mesh;
 class Sprite;
-class Shader;
+class RHIShaderProgram;
 class Material;
 
 class SpriteComponent : public Component
