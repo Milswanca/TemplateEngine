@@ -117,7 +117,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\Desktop\Template\SettingsSheets\Template Includes.props" />
+    <Import Project="SettingsSheets\Template Includes.props" />
     <Import Project="SettingsSheets\Template Libs Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditor|x64'" Label="PropertySheets">
