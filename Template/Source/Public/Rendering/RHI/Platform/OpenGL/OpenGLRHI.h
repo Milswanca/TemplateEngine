@@ -5,17 +5,23 @@ class OpenGLShader;
 
 class OpenGLRHI : public RHI
 {
-
 public:
-	RHIShaderProgram* CreateShaderProgram(RHIVertexShader* InVertexShader, RHIPixelShader* InPixelShader) override;
-	void DeleteShaderProgram(RHIShaderProgram* InProgram) override;
+	RHIShaderProgram* RHICreateShaderProgram(RHIVertexShader* InVertexShader, RHIPixelShader* InPixelShader) override;
+	void RHIDeleteShaderProgram(RHIShaderProgram* InProgram) override;
 
-	RHIVertexShader* CreateVertexShader(std::string_view InSource) override;
-	RHIPixelShader* CreatePixelShader(std::string_view InSource) override;
-	void SetOpenGLShaderSource(OpenGLShader* InShader, std::string_view InSource);
-	void DeleteShader(RHIShader* InShader) override;
+	RHIVertexShader* RHICreateVertexShader(std::string_view InSource) override;
+	RHIPixelShader* RHICreatePixelShader(std::string_view InSource) override;
+	void RHISetOpenGLShaderSource(OpenGLShader* InShader, std::string_view InSource);
+	void RHIDeleteShader(RHIShader* InShader) override;
 
-	RHITexture* CreateTexture(const CreateTextureDesc& InDesc) override;
-	void SetTexturePixels(RHITexture* InTexture, unsigned char* InRawMemory) override;
-	void DestroyTexture(RHITexture* InTexture) override;
+	RHITexture* RHICreateTexture(const CreateTextureDesc& InDesc) override;
+	void RHISetTexturePixels(RHITexture* InTexture, unsigned char* InRawMemory) override;
+	void RHIDeleteTexture(RHITexture* InTexture) override;
+
+	RHIVertexLayout* RHICreateVertexLayout(const RHIVertexAttributeArray& InAttributes) override;
+	void RHIBindVertexLayout(RHIVertexLayout* InLayout) override;
+
+	RHIVertexBuffer* RHICreateVertexBuffer(const RHIBufferDesc& InDesc) override;
+	RHIIndexBuffer* RHICreateIndexBuffer(const RHIBufferDesc& InDesc) override;
+	void RHIUpdateBufferData(RHIBuffer* InBuffer, int InSizeBytes, int InOffsetBytes, unsigned char* InData) override;
 };

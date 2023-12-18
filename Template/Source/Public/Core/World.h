@@ -31,7 +31,7 @@ public:
 	template<typename T>
 	T* SpawnActor(const ActorSpawnParams& InParams)
 	{
-		T* NewActor = GetEngine()->NewObject<T>(this);
+		T* NewActor = s_Engine->NewObject<T>(this);
 		NewActor->SetLocalPosition(InParams.m_Translation);
 		NewActor->SetLocalRotation(InParams.m_Rotation);
 		NewActor->SetLocalScale(InParams.m_Scale);
@@ -42,7 +42,7 @@ public:
 	void DestroyActor(Actor* InToDestroy)
 	{
 		m_Actors.erase(std::remove(m_Actors.begin(), m_Actors.end(), InToDestroy), m_Actors.end());
-		GetEngine()->DestroyObject(InToDestroy);
+		s_Engine->DestroyObject(InToDestroy);
 	}
 
 private:

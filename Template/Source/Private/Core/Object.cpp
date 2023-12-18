@@ -22,16 +22,6 @@ void Object::End()
 
 }
 
-IRHI* Object::GetImmediateRenderer() const
-{
-	return GetEngine()->GetImmediateRenderer();
-}
-
-Engine* Object::GetEngine() const
-{
-	return Engine::Get();
-}
-
 World* Object::GetWorld() const
 {
 	return m_CurrentWorld;

@@ -1,12 +1,12 @@
 #pragma once
+#include "Core/Object.h"
+#include "Rendering/RHI/RHI.h"
 #include <string>
 #include <vector>
-#include "Core/Object.h"
 
 struct GLFWwindow;
 class Object;
 class World;
-class IRHI;
 
 #define IMPLEMENT_MAIN(screenWidth, screenHeight, screenTitle, applicationClass) \
 	int main() \
@@ -21,6 +21,8 @@ class IRHI;
 		delete Eng; \
 		return 0; \
 	} \
+
+extern class Engine* s_Engine;
 
 class Engine : public Object
 {
@@ -40,13 +42,13 @@ public:
 	virtual void Shutdown();
 
 	virtual World* GetWorld() const;
-	IRHI* GetImmediateRenderer() const;
+	RHI* GetRHI() const;
 	GLFWwindow* GetMainWindow() const;
 
 	template<typename T>
 	T* NewObject(Object* InOuter = nullptr)
 	{
-		InOuter = InOuter == nullptr ? s_Inst : InOuter;
+		InOuter = InOuter == nullptr ? s_Engine : InOuter;
 
 		T* NewObj = new T(InOuter);
 		NewObj->Begin();
@@ -67,9 +69,6 @@ public:
 private:
 	std::vector<Object*> m_Objects;
 
-	IRHI* m_RendererImmediate;
 	World* m_CurrentWorld;
 	GLFWwindow* m_MainWindow;
-	static Engine* s_Inst;
 };
-

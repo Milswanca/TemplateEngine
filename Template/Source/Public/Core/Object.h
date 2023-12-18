@@ -2,7 +2,7 @@
 
 class Engine;
 class World;
-class IRHI;
+class OpenGLRHI;
 
 #define IMPLEMENT_CONSTRUCTOR(className, baseClass) \
     className() = delete; \
@@ -20,8 +20,6 @@ protected:
 	virtual void Begin();
 	virtual void End();
 
-	Engine* GetEngine() const;
-	IRHI* GetImmediateRenderer() const;
 	virtual World* GetWorld() const;
 	virtual Object* GetOuter() const;
 

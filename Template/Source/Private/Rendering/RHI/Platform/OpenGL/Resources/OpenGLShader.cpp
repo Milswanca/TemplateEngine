@@ -1,34 +1,39 @@
 #include "Rendering/RHI/Platform/OpenGL/Resources/OpenGLShader.h"
 #include <iostream>
 
-OpenGLShader::OpenGLShader(GLenum InShaderType)
+std::unordered_map<EShaderTypes, GLenum> OpenGLShader::s_ShaderTypesToGLTypes = {
+	{ EShaderTypes::Vertex, GL_VERTEX_SHADER },
+	{ EShaderTypes::Pixel, GL_FRAGMENT_SHADER }
+};
+
+OpenGLShader::OpenGLShader(EShaderTypes InShaderType) : RHIShader(InShaderType)
 {
-	m_ShaderType = InShaderType;
-	m_ShaderID = glCreateShader(InShaderType);
+	m_GLShaderType = s_ShaderTypesToGLTypes[InShaderType];
+	m_GLShaderID = glCreateShader(m_GLShaderType);
 }
 
 OpenGLShader::~OpenGLShader()
 {
-	glDeleteShader(m_ShaderID);
+	glDeleteShader(m_GLShaderID);
 }
 
 void OpenGLShader::SetShaderSource(std::string_view InSource)
 {
-	glShaderSource(m_ShaderID, 1, (const GLchar* const*)InSource.data(), 0);
+	glShaderSource(m_GLShaderID, 1, (const GLchar* const*)InSource.data(), 0);
 }
 
 void OpenGLShader::Compile()
 {
-	glCompileShader(m_ShaderID);
+	glCompileShader(m_GLShaderID);
 
 	int Success;
 	char InfoLog[512];
 
 	// print compile errors if any
-	glGetShaderiv(m_ShaderID, GL_COMPILE_STATUS, &Success);
+	glGetShaderiv(m_GLShaderID, GL_COMPILE_STATUS, &Success);
 	if (!Success)
 	{
-		glGetShaderInfoLog(m_ShaderID, 512, NULL, InfoLog);
+		glGetShaderInfoLog(m_GLShaderID, 512, NULL, InfoLog);
 		std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << InfoLog << std::endl;
 	};
 }

@@ -8,8 +8,8 @@ std::unordered_map<VertexAttributeTypes, GLenum> OpenGLVertexLayout::s_VertexAtt
 
 OpenGLVertexLayout::OpenGLVertexLayout(const RHIVertexAttributeArray& InAttribs) : RHIVertexLayout(InAttribs)
 {
-	glGenVertexArrays(1, &m_LayoutID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_LayoutID);
+	glGenVertexArrays(1, &m_GLLayoutID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_GLLayoutID);
 
 	int NumAttributes = GetNumAttributes();
 	for (int i = 0; i < NumAttributes; ++i)
@@ -24,12 +24,12 @@ OpenGLVertexLayout::OpenGLVertexLayout(const RHIVertexAttributeArray& InAttribs)
 
 OpenGLVertexLayout::~OpenGLVertexLayout()
 {
-	glDeleteVertexArrays(1, &m_LayoutID);
+	glDeleteVertexArrays(1, &m_GLLayoutID);
 }
 
 void OpenGLVertexLayout::Bind()
 {
-	glBindVertexArray(m_LayoutID);
+	glBindVertexArray(m_GLLayoutID);
 }
 
 void OpenGLVertexLayout::Unbind()

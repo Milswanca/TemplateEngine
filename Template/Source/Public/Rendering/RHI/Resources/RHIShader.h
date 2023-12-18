@@ -24,13 +24,13 @@ private:
 	EShaderTypes m_Type;
 };
 
-class RHIPixelShader : public RHIShader
+class RHIPixelShader : public virtual RHIShader
 {
 public:
 	RHIPixelShader() : RHIShader(EShaderTypes::Pixel) {};
 };
 
-class RHIVertexShader : public RHIShader
+class RHIVertexShader : public virtual RHIShader
 {
 public:
 	RHIVertexShader() : RHIShader(EShaderTypes::Vertex) {};

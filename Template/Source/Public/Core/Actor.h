@@ -47,7 +47,7 @@ public:
 	template<typename T>
 	T* AddComponent()
 	{
-		T* NewComp = GetEngine()->NewObject<T>(this);
+		T* NewComp = s_Engine->NewObject<T>(this);
 		m_Components.push_back(NewComp);
 
 		return NewComp;

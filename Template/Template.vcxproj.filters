@@ -51,9 +51,6 @@
     <ClCompile Include="Source\Private\Rendering\Assets\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Private\Rendering\Assets\Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Private\Utils\Delegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,7 +81,34 @@
     <ClCompile Include="Source\Private\Rendering\Utils\ShaderUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLVertexLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\RHI\Resources\RHIVertexLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\RHI\Resources\RHIBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\Assets\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Public\Rendering\RHI\Resources\RHIShader.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\OpenGLRHI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\Assets\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Rendering\Assets\Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,9 +152,6 @@
     <ClInclude Include="Source\Public\Rendering\Assets\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Rendering\Assets\Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Public\Rendering\Assets\Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -167,16 +188,25 @@
     <ClInclude Include="Source\Public\Rendering\Utils\ShaderUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\OpenGLRHI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Private\Rendering\RHI\Platform\OpenGL\OpenGLRHI.cpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHITexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIVertexLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLVertexLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\OpenGLRHI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Rendering\Assets\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

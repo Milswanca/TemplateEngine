@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Private\Rendering\Assets\Mesh.cpp" />
+    <ClCompile Include="Source\Private\Rendering\Assets\Texture.cpp" />
+    <ClCompile Include="Source\Private\Rendering\Assets\Texture2D.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\OpenGLRHI.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShaderProgram.cpp" />
     <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\Private\Actors\CameraActor.cpp" />
@@ -32,23 +37,28 @@
     <ClCompile Include="Source\Private\Core\Object.cpp" />
     <ClCompile Include="Source\Private\Core\World.cpp" />
     <ClCompile Include="Source\Private\Math\Transform.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLVertexLayout.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\Resources\RHIBuffer.cpp" />
+    <ClCompile Include="Source\Private\Rendering\RHI\Resources\RHIVertexLayout.cpp" />
     <ClCompile Include="Source\Private\Rendering\RHI\RHI.cpp" />
     <ClCompile Include="Source\Private\Rendering\Assets\Material.cpp" />
     <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShader.cpp" />
     <ClCompile Include="Source\Private\Rendering\RHI\Platform\OpenGL\Resources\OpenGLTexture.cpp" />
-    <ClCompile Include="Source\Private\Rendering\Assets\Sprite.cpp" />
     <ClCompile Include="Source\Private\Rendering\Utils\ShaderUtils.cpp" />
     <ClCompile Include="Source\Private\Utils\Delegate.cpp" />
     <ClCompile Include="Source\Private\Utils\FilePath.cpp" />
     <ClCompile Include="Source\Private\Utils\FileUtils.cpp" />
     <ClCompile Include="Source\Private\Utils\StringUtils.cpp" />
+    <ClCompile Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLBuffer.h" />
     <ClCompile Include="Source\Public\Rendering\RHI\Resources\RHIShader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Private\Rendering\RHI\Platform\OpenGL\OpenGLRHI.cpp" />
+    <ClInclude Include="Source\Public\Rendering\Assets\Texture.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\OpenGLRHI.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShaderProgram.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLTexture.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLVertexLayout.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIBuffer.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIResource.h" />
     <ClInclude Include="Source\Public\Actors\CameraActor.h" />
     <ClInclude Include="Source\Public\Actors\SpriteActor.h" />
@@ -63,11 +73,11 @@
     <ClInclude Include="Source\Public\Math\Transform.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIShaderProgram.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHITexture.h" />
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIVertexLayout.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\RHI.h" />
     <ClInclude Include="Source\Public\Rendering\RHI\Platform\OpenGL\Resources\OpenGLShader.h" />
     <ClInclude Include="Source\Public\Rendering\Assets\Material.h" />
     <ClInclude Include="Source\Public\Rendering\Assets\Mesh.h" />
-    <ClInclude Include="Source\Public\Rendering\Assets\Sprite.h" />
     <ClInclude Include="Source\Public\Rendering\Assets\Texture2D.h" />
     <ClInclude Include="Source\Public\Rendering\Utils\ShaderUtils.h" />
     <ClInclude Include="Source\Public\Template2DCore.h" />

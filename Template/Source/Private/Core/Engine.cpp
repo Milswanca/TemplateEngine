@@ -1,13 +1,14 @@
 #include "Core/Engine.h"
 #include "Core/World.h"
-#include "Rendering/RendererImmediateGL.h"
+#include "Rendering/RHI/Platform/OpenGL/OpenGLRHI.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
 unsigned int Engine::s_WindowWidth = 0;
 unsigned int Engine::s_WindowHeight = 0;
-Engine* Engine::s_Inst = nullptr;
+
+Engine* s_Engine;
 
 void framebuffer_size_callback(GLFWwindow* Window, int Width, int Height)
 {
@@ -18,11 +19,11 @@ void framebuffer_size_callback(GLFWwindow* Window, int Width, int Height)
 
 void Engine::Init()
 {
-	s_Inst = this;
+	s_Engine = this;
 
 	m_MainWindow = nullptr;
 	m_CurrentWorld = nullptr;
-	m_RendererImmediate = nullptr;
+	s_RHI = new OpenGLRHI();
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -34,7 +35,6 @@ void Engine::Init()
 void Engine::InitWorld()
 {
 	m_CurrentWorld = NewObject<World>(nullptr);
-	m_RendererImmediate = NewObject<RendererImmediateGL>(nullptr);
 }
 
 void Engine::Shutdown()
@@ -51,12 +51,12 @@ void Engine::Shutdown()
 
 Engine* Engine::Get()
 {
-	return s_Inst;
+	return s_Engine;
 }
 
-IRHI* Engine::GetImmediateRenderer() const
+RHI* Engine::GetRHI() const
 {
-	return m_RendererImmediate;
+	return s_RHI;
 }
 
 World* Engine::GetWorld() const
