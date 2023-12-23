@@ -16,7 +16,7 @@ class RHIShader : public RHIResource
 public:
 	RHIShader() = delete;
 	RHIShader(EShaderTypes InType) : m_Type(InType) {}
-	virtual ~RHIShader() {}
+	virtual ~RHIShader() = default;
 
 	EShaderTypes GetType() const { return m_Type; }
 

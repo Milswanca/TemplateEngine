@@ -1,4 +1,5 @@
 #include "Rendering/Assets/Mesh.h"
+#include "Rendering/RHI/RHI.h"
 #include "Core/Engine.h"
 #include <glad/glad.h>
 
@@ -25,16 +26,16 @@ Mesh* Mesh::CreateQuad()
 		0,2,3 // second triangle (bottom left - top right - bottom right)
 	};
 
-	FMeshData* RenderData = NewMesh->GetRenderData();
+	MeshData* RenderData = NewMesh->GetRenderData();
 	RenderData->SetPositions(Vertices);
 	RenderData->SetUVs(UVs);
 	RenderData->AddSection(Indices, nullptr);
-	NewMesh->Build();
+	RenderData->Build();
 
 	return NewMesh;
 }
 
-Mesh::FMeshData::FMeshData()
+Mesh::MeshData::MeshData()
 {
 	m_Positions = nullptr;
 	m_Normals = nullptr;
@@ -53,9 +54,13 @@ Mesh::FMeshData::FMeshData()
 	m_NumColors = 0;
 	m_NumIndices = 0;
 	m_NumSections = 0;
+
+	m_VertexStateObject = nullptr;
+	m_VertexBuffer = nullptr;
+	m_IndexBuffer = nullptr;
 }
 
-Mesh::FMeshData::~FMeshData()
+Mesh::MeshData::~MeshData()
 {
 	for (int i = 0; i < m_NumSections; ++i)
 	{
@@ -79,9 +84,13 @@ Mesh::FMeshData::~FMeshData()
 	m_NumColors = 0;
 	m_NumIndices = 0;
 	m_NumSections = 0;
+
+	RHIDeleteVertexStateObject(m_VertexStateObject);
+	RHIDeleteBuffer(m_VertexBuffer);
+	RHIDeleteBuffer(m_IndexBuffer);
 }
 
-void Mesh::FMeshData::SetPositions(const std::vector<glm::vec3>& InPositions)
+void Mesh::MeshData::SetPositions(const std::vector<glm::vec3>& InPositions)
 {
 	delete[] m_Positions;
 	m_Positions = new glm::vec3[InPositions.size()];
@@ -89,7 +98,7 @@ void Mesh::FMeshData::SetPositions(const std::vector<glm::vec3>& InPositions)
 	m_NumPositions = InPositions.size();
 }
 
-void Mesh::FMeshData::SetNormals(const std::vector<glm::vec3>& InNormals)
+void Mesh::MeshData::SetNormals(const std::vector<glm::vec3>& InNormals)
 {
 	delete[] m_Normals;
 	m_Normals = new glm::vec3[InNormals.size()];
@@ -97,7 +106,7 @@ void Mesh::FMeshData::SetNormals(const std::vector<glm::vec3>& InNormals)
 	m_NumNormals = InNormals.size();
 }
 
-void Mesh::FMeshData::SetTangents(const std::vector<glm::vec3>& InTangents)
+void Mesh::MeshData::SetTangents(const std::vector<glm::vec3>& InTangents)
 {
 	delete[] m_Tangents;
 	m_Tangents = new glm::vec3[InTangents.size()];
@@ -105,7 +114,7 @@ void Mesh::FMeshData::SetTangents(const std::vector<glm::vec3>& InTangents)
 	m_NumTangents = InTangents.size();
 }
 
-void Mesh::FMeshData::SetBitangents(const std::vector<glm::vec3>& InBitangents)
+void Mesh::MeshData::SetBitangents(const std::vector<glm::vec3>& InBitangents)
 {
 	delete[] m_Bitangents;
 	m_Bitangents = new glm::vec3[InBitangents.size()];
@@ -113,7 +122,7 @@ void Mesh::FMeshData::SetBitangents(const std::vector<glm::vec3>& InBitangents)
 	m_NumBitangents = InBitangents.size();
 }
 
-void Mesh::FMeshData::SetUVs(const std::vector<glm::vec2>& InUVs)
+void Mesh::MeshData::SetUVs(const std::vector<glm::vec2>& InUVs)
 {
 	delete[] m_UVs;
 	m_UVs = new glm::vec2[InUVs.size()];
@@ -121,20 +130,20 @@ void Mesh::FMeshData::SetUVs(const std::vector<glm::vec2>& InUVs)
 	m_NumUVs = InUVs.size();
 }
 
-void Mesh::FMeshData::SetColors(const std::vector<glm::vec4>& InColors)
+void Mesh::MeshData::SetColors(const std::vector<glm::vec4>& InColors)
 {
 	delete[] m_Colors;
 	m_Colors = new glm::vec4[InColors.size()];
 	memcpy(m_Colors, InColors.data(), sizeof(glm::vec4) * InColors.size());
-	m_NumUVs = InColors.size();
+	m_NumColors = InColors.size();
 }
 
-const unsigned int* Mesh::FMeshData::GetIndices() const
+const unsigned int* Mesh::MeshData::GetIndices() const
 {
 	return m_Indices;
 }
 
-unsigned int Mesh::FMeshData::AddSection(const std::vector<unsigned int>& InIndices, Material* InMaterial)
+unsigned int Mesh::MeshData::AddSection(const std::vector<unsigned int>& InIndices, Material* InMaterial)
 {
 	unsigned int* NewIndices = new unsigned int[m_NumIndices + InIndices.size()];
 	memcpy(NewIndices, m_Indices, sizeof(unsigned int) * m_NumIndices);
@@ -143,10 +152,10 @@ unsigned int Mesh::FMeshData::AddSection(const std::vector<unsigned int>& InIndi
 	delete[] m_Indices;
 	m_Indices = NewIndices;
 
-	FMeshSection** NewSections = new FMeshSection*[m_NumSections + 1];
-	memcpy(NewSections, m_Sections, sizeof(FMeshSection) * m_NumSections);
+	MeshSection** NewSections = new MeshSection*[m_NumSections + 1];
+	memcpy(NewSections, m_Sections, sizeof(MeshSection) * m_NumSections);
 
-	FMeshSection* NewMeshSection = new FMeshSection();
+	MeshSection* NewMeshSection = new MeshSection();
 	NewMeshSection->m_Mat = InMaterial;
 	NewMeshSection->m_IndexOffset = m_NumIndices;
 	NewMeshSection->m_NumIndices = InIndices.size();
@@ -161,9 +170,9 @@ unsigned int Mesh::FMeshData::AddSection(const std::vector<unsigned int>& InIndi
 	return m_NumSections - 1;
 }
 
-void Mesh::FMeshData::RemoveSection(unsigned int SectionIndex)
+void Mesh::MeshData::RemoveSection(unsigned int SectionIndex)
 {
-	FMeshSection* Section = m_Sections[SectionIndex];
+	MeshSection* Section = m_Sections[SectionIndex];
 	unsigned int StartIndex = Section->m_IndexOffset;
 	unsigned int EndIndices = Section->m_IndexOffset + Section->m_NumIndices;
 	unsigned int SectionNumIndices = Section->m_NumIndices;
@@ -184,9 +193,9 @@ void Mesh::FMeshData::RemoveSection(unsigned int SectionIndex)
 	}
 
 	// Remove the mesh section by not copying it
-	FMeshSection** NewSections = new FMeshSection*[m_NumSections - 1];
-	memcpy(NewSections, m_Sections, sizeof(FMeshSection) * SectionIndex);
-	memcpy((NewSections + SectionIndex), (m_Sections + SectionIndex + 1), sizeof(FMeshSection) * (m_NumSections - (SectionIndex + 1)));
+	MeshSection** NewSections = new MeshSection*[m_NumSections - 1];
+	memcpy(NewSections, m_Sections, sizeof(MeshSection) * SectionIndex);
+	memcpy((NewSections + SectionIndex), (m_Sections + SectionIndex + 1), sizeof(MeshSection) * (m_NumSections - (SectionIndex + 1)));
 
 	delete[] m_Sections;
 	m_Sections = NewSections;
@@ -194,110 +203,98 @@ void Mesh::FMeshData::RemoveSection(unsigned int SectionIndex)
 	m_NumSections--;
 }
 
-unsigned int Mesh::FMeshData::GetNumSections() const
+void Mesh::MeshData::Build()
+{
+	RHIDeleteVertexStateObject(m_VertexStateObject);
+	RHIDeleteBuffer(m_VertexBuffer);
+	RHIDeleteBuffer(m_IndexBuffer);
+	
+	unsigned int PositionsBufferSizeBytes = (sizeof(glm::vec3) * m_NumPositions);
+	unsigned int UVsBufferSizeBytes = (sizeof(glm::vec2) * m_NumUVs);
+	unsigned int NormalsBufferSizeBytes = (sizeof(glm::vec3) * m_NumNormals);
+	unsigned int TangentsBufferSizeBytes = (sizeof(glm::vec3) * m_NumTangents);
+	unsigned int BitangentsBufferSizeBytes = (sizeof(glm::vec3) * m_NumBitangents);
+	unsigned int ColorsBufferSizeBytes = (sizeof(glm::vec4) * m_NumColors);
+
+	unsigned int VertexBufferSizeBytes =
+		PositionsBufferSizeBytes + UVsBufferSizeBytes + NormalsBufferSizeBytes +
+		TangentsBufferSizeBytes + BitangentsBufferSizeBytes + ColorsBufferSizeBytes;
+
+	unsigned int PositionsOffsetBytes = 0;
+	unsigned int UVsOffsetBytes = PositionsOffsetBytes + PositionsBufferSizeBytes;
+	unsigned int NormalsOffsetBytes = UVsOffsetBytes + UVsBufferSizeBytes;
+	unsigned int TangentsOffsetBytes = NormalsOffsetBytes + NormalsBufferSizeBytes;
+	unsigned int BitangentsOffsetBytes = TangentsOffsetBytes + TangentsBufferSizeBytes;
+	unsigned int ColorsOffsetBytes = BitangentsOffsetBytes + BitangentsBufferSizeBytes;
+
+	// Vertex Buffer
+	RHIBufferDesc VertexBufferDesc;
+	VertexBufferDesc.m_Size = VertexBufferSizeBytes;
+	VertexBufferDesc.m_Stride = 0;
+	m_VertexBuffer = RHICreateVertexBuffer(VertexBufferDesc);
+	RHIUpdateBufferData(m_VertexBuffer, PositionsBufferSizeBytes, PositionsOffsetBytes, m_Positions);
+	RHIUpdateBufferData(m_VertexBuffer, UVsBufferSizeBytes, UVsOffsetBytes, m_UVs);
+	RHIUpdateBufferData(m_VertexBuffer, NormalsBufferSizeBytes, NormalsOffsetBytes, m_Normals);
+	RHIUpdateBufferData(m_VertexBuffer, TangentsBufferSizeBytes, TangentsOffsetBytes, m_Tangents);
+	RHIUpdateBufferData(m_VertexBuffer, BitangentsBufferSizeBytes, BitangentsOffsetBytes, m_Bitangents);
+	RHIUpdateBufferData(m_VertexBuffer, ColorsBufferSizeBytes, ColorsOffsetBytes, m_Colors);
+
+	// Index Buffer
+	RHIBufferDesc IndexBufferDesc;
+	IndexBufferDesc.m_Size = m_NumIndices * sizeof(unsigned int);
+	IndexBufferDesc.m_Stride = 0;
+	m_IndexBuffer = RHICreateIndexBuffer(IndexBufferDesc);
+	RHISetIndexBufferIndices(m_IndexBuffer, m_NumIndices, m_Indices);
+	
+	// Vertex Layout
+	RHIVertexAttributeArray Attributes(6);
+	Attributes.SetAttribute(0, RHIVertexAttributeDesc("Positions", VertexAttributeTypes::Float, 3, false, sizeof(glm::vec3), PositionsOffsetBytes));
+	Attributes.SetAttribute(1, RHIVertexAttributeDesc("UVs", VertexAttributeTypes::Float, 2, false, sizeof(glm::vec2), UVsOffsetBytes));
+	Attributes.SetAttribute(2, RHIVertexAttributeDesc("Normals", VertexAttributeTypes::Float, 3, true, sizeof(glm::vec3), NormalsOffsetBytes));
+	Attributes.SetAttribute(3, RHIVertexAttributeDesc("Tangents", VertexAttributeTypes::Float, 3, true, sizeof(glm::vec3), TangentsOffsetBytes));
+	Attributes.SetAttribute(4, RHIVertexAttributeDesc("Bitangents", VertexAttributeTypes::Float, 3, true, sizeof(glm::vec3), BitangentsOffsetBytes));
+	Attributes.SetAttribute(5, RHIVertexAttributeDesc("Colors", VertexAttributeTypes::Float, 4, false, sizeof(glm::vec4), ColorsOffsetBytes));
+
+	// Vertex State Object
+	m_VertexStateObject = RHICreateVertexStateObject(m_VertexBuffer, m_IndexBuffer, Attributes);
+}
+
+unsigned int Mesh::MeshData::GetNumSections() const
 {
 	return m_NumSections;
 }
 
-const Mesh::FMeshSection* Mesh::FMeshData::GetMeshSection(unsigned int SectionIndex) const
+const Mesh::MeshSection* Mesh::MeshData::GetMeshSection(unsigned int SectionIndex) const
 {
 	return m_Sections[SectionIndex];
 }
 
+RHIVertexStateObject* Mesh::MeshData::GetVertexStateObject() const
+{
+	return m_VertexStateObject;
+}
+
+RHIVertexBuffer* Mesh::MeshData::GetVertexBuffer() const
+{
+	return m_VertexBuffer;
+}
+
+RHIIndexBuffer* Mesh::MeshData::GetIndexBuffer() const
+{
+	return m_IndexBuffer;
+}
+
 void Mesh::Begin()
 {
-	glGenBuffers(1, &m_IndexBuffer);
-	glGenBuffers(1, &m_VertexBuffer);
-	glGenVertexArrays(1, &m_VertexArrayObject);
-
-	m_RenderData = new FMeshData();
-
-	m_PositionsBufferSizeBytes = 0;
-	m_UVsBufferSizeBytes = 0;
-	m_NormalsBufferSizeBytes = 0;
-	m_TangentsBufferSizeBytes = 0;
-	m_BitangentsBufferSizeBytes = 0;
-	m_ColorsBufferSizeBytes = 0;
-	m_VertexBufferSizeBytes = 0;
-
-	m_PositionsOffsetBytes = 0;
-	m_UVsOffsetBytes = 0;
-	m_NormalsOffsetBytes = 0;
-	m_TangentsOffsetBytes = 0;
-	m_BitangentsOffsetBytes = 0;
-	m_ColorsOffsetBytes = 0;
+	m_RenderData = new MeshData();
 }
 
 void Mesh::End()
 {
-	glDeleteBuffers(1, &m_IndexBuffer);
-	glDeleteBuffers(1, &m_VertexBuffer);
-	glDeleteVertexArrays(1, &m_VertexArrayObject);
-
 	delete m_RenderData;
 }
 
-void Mesh::Build()
-{
-	m_PositionsBufferSizeBytes = (sizeof(glm::vec3) * m_RenderData->m_NumPositions);
-	m_UVsBufferSizeBytes = (sizeof(glm::vec2) * m_RenderData->m_NumUVs);
-	m_NormalsBufferSizeBytes = (sizeof(glm::vec3) * m_RenderData->m_NumNormals);
-	m_TangentsBufferSizeBytes = (sizeof(glm::vec3) * m_RenderData->m_NumTangents);
-	m_BitangentsBufferSizeBytes = (sizeof(glm::vec3) * m_RenderData->m_NumBitangents);
-	m_ColorsBufferSizeBytes = (sizeof(glm::vec4) * m_RenderData->m_NumColors);
-
-	m_VertexBufferSizeBytes =
-		m_PositionsBufferSizeBytes + m_UVsBufferSizeBytes + m_NormalsBufferSizeBytes +
-		m_TangentsBufferSizeBytes + m_BitangentsBufferSizeBytes + m_ColorsBufferSizeBytes;
-
-	m_PositionsOffsetBytes = 0;
-	m_UVsOffsetBytes = m_PositionsOffsetBytes + m_PositionsBufferSizeBytes;
-	m_NormalsOffsetBytes = m_UVsOffsetBytes + m_UVsBufferSizeBytes;
-	m_TangentsOffsetBytes = m_NormalsOffsetBytes + m_NormalsBufferSizeBytes;
-	m_BitangentsOffsetBytes = m_TangentsOffsetBytes + m_TangentsBufferSizeBytes;
-	m_ColorsOffsetBytes = m_BitangentsOffsetBytes + m_BitangentsBufferSizeBytes;
-
-	glBindVertexArray(m_VertexArrayObject);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, m_VertexBufferSizeBytes, NULL, GL_STATIC_DRAW);
-
-	glBufferSubData(GL_ARRAY_BUFFER, m_PositionsOffsetBytes, m_PositionsBufferSizeBytes, m_RenderData->m_Positions);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)m_PositionsOffsetBytes);
-
-	glBufferSubData(GL_ARRAY_BUFFER, m_UVsOffsetBytes, m_UVsBufferSizeBytes, m_RenderData->m_UVs);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)m_UVsOffsetBytes);
-
-	glBufferSubData(GL_ARRAY_BUFFER, m_NormalsOffsetBytes, m_NormalsBufferSizeBytes, m_RenderData->m_Normals);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, 0, (GLvoid*)m_NormalsOffsetBytes);
-
-	glBufferSubData(GL_ARRAY_BUFFER, m_TangentsOffsetBytes, m_TangentsBufferSizeBytes, m_RenderData->m_Tangents);
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_TRUE, 0, (GLvoid*)m_TangentsOffsetBytes);
-
-	glBufferSubData(GL_ARRAY_BUFFER, m_BitangentsOffsetBytes, m_BitangentsBufferSizeBytes, m_RenderData->m_Bitangents);
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_TRUE, 0, (GLvoid*)m_BitangentsOffsetBytes);
-
-	glBufferSubData(GL_ARRAY_BUFFER, m_ColorsOffsetBytes, m_ColorsBufferSizeBytes, m_RenderData->m_Colors);
-	glEnableVertexAttribArray(5);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 0, (GLvoid*)m_ColorsOffsetBytes);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_RenderData->m_NumIndices * sizeof(unsigned int), m_RenderData->m_Indices, GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
-}
-
-Mesh::FMeshData* Mesh::GetRenderData() const
+Mesh::MeshData* Mesh::GetRenderData() const
 {
 	return m_RenderData;
-}
-
-unsigned int Mesh::GetVAO() const
-{
-	return m_VertexArrayObject;
 }

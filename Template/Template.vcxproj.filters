@@ -111,6 +111,12 @@
     <ClCompile Include="Source\Private\Rendering\Assets\Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Private\Actors\StaticMeshActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Components\StaticMeshComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Public\Actors\CameraActor.h">
@@ -207,6 +213,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Public\Rendering\Assets\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Actors\StaticMeshActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Components\StaticMeshComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Rendering\RHI\Resources\RHIBoundVertexState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

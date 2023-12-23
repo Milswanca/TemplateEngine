@@ -23,6 +23,7 @@ Global
 		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.Release|x64.Build.0 = Release|x64
 		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.ReleaseEditor|x64.ActiveCfg = ReleaseEditor|x64
 		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.ReleaseEditor|x64.Build.0 = ReleaseEditor|x64
+		{8C1856B3-371E-4EF3-9BAB-8C434E0C3C1E}.Debug|x64.Deploy.0 = Debug|x64
 		{228D3E3B-3537-4704-A785-9FED084E1627}.Debug|x64.ActiveCfg = Debug|x64
 		{228D3E3B-3537-4704-A785-9FED084E1627}.Debug|x64.Build.0 = Debug|x64
 		{228D3E3B-3537-4704-A785-9FED084E1627}.DebugEditor|x64.ActiveCfg = DebugEditor|x64
@@ -31,6 +32,7 @@ Global
 		{228D3E3B-3537-4704-A785-9FED084E1627}.Release|x64.Build.0 = Release|x64
 		{228D3E3B-3537-4704-A785-9FED084E1627}.ReleaseEditor|x64.ActiveCfg = ReleaseEditor|x64
 		{228D3E3B-3537-4704-A785-9FED084E1627}.ReleaseEditor|x64.Build.0 = ReleaseEditor|x64
+		{228D3E3B-3537-4704-A785-9FED084E1627}.Debug|x64.Deploy.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

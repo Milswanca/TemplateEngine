@@ -1,6 +1,13 @@
 #pragma once
 #include "Rendering/RHI/Resources/RHIResource.h"
 
+enum class BufferAccessTypes
+{
+	Read,
+	Write,
+	ReadWrite
+};
+
 struct RHIBufferDesc
 {
 	RHIBufferDesc() {}
@@ -15,7 +22,7 @@ class RHIBuffer : public RHIResource
 public:
 	RHIBuffer() = delete;
 	RHIBuffer(const RHIBufferDesc& InDesc);
-	virtual ~RHIBuffer() {};
+	virtual ~RHIBuffer() = default;
 
 	const RHIBufferDesc& GetDescription() const;
 
