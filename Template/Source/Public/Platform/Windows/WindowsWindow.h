@@ -11,11 +11,12 @@ public:
     virtual void SwapWindowBuffers() override;
     virtual void Repaint();
 
-    HWND GetHandle() const;
-    HDC GetDeviceContext() const;
-
+    HWND GetWindowsHandle() const;
+    HDC GetWindowsDeviceContext() const;
+    
     static inline const wchar_t* s_WindowClassName = L"TemplateWindowClass";
 
 private:
-    HWND m_Handle;
+    HWND m_WindowsHandle;
+    HDC m_WindowsDeviceContext;
 };

@@ -6,6 +6,7 @@ class RHIDeviceContext;
 
 extern class RHIPlatform* s_RHIPlatform;
 extern RHIPlatform* CreateRHIPlatform();
+extern void DeleteRHIPlatform(class RHIPlatform* InPlatform);
 
 class RHIPlatform 
 {

@@ -14,7 +14,7 @@ WindowsWindow::WindowsWindow(const WindowDesc& InDesc) : Window(InDesc)
     WindowRect.top = (long)0;
     WindowRect.bottom = (long)Height;
 
-    m_Handle = CreateWindowEx(NULL,
+    m_WindowsHandle = CreateWindowEx(NULL,
         s_WindowClassName,
         InDesc.m_Title,
         WS_OVERLAPPEDWINDOW |
@@ -50,38 +50,39 @@ WindowsWindow::WindowsWindow(const WindowDesc& InDesc) : Window(InDesc)
         0,                                      //reserved
         0, 0, 0 };                              //layer masks ignored
 
-    /*      Choose best matching format*/
-    PixelFormat = ChoosePixelFormat(GetDeviceContext(), &PFD);
+    m_WindowsDeviceContext = GetDC(m_WindowsHandle);
+    /* Choose best matching format */
+    PixelFormat = ChoosePixelFormat(m_WindowsDeviceContext, &PFD);
 
-    /*      Set the pixel format to the device context*/
-    SetPixelFormat(GetDeviceContext(), PixelFormat, &PFD);
+    /* Set the pixel format to the device context */
+    SetPixelFormat(m_WindowsDeviceContext, PixelFormat, &PFD);
 
-    ShowWindow(m_Handle, SW_SHOWDEFAULT);
-    UpdateWindow(m_Handle);
+    ShowWindow(m_WindowsHandle, SW_SHOWDEFAULT);
+    UpdateWindow(m_WindowsHandle);
 }
 
 WindowsWindow::~WindowsWindow()
 {
-    DestroyWindow(m_Handle);
+    DestroyWindow(m_WindowsHandle);
 }
 
 void WindowsWindow::SwapWindowBuffers()
 {
     Window::SwapWindowBuffers();
-
-    SwapBuffers(GetDeviceContext());
+    
+    SwapBuffers((HDC)GetDeviceContext()->GetDeviceContext());
 }
 
 void WindowsWindow::Repaint()
 {
 }
 
-HWND WindowsWindow::GetHandle() const
+HWND WindowsWindow::GetWindowsHandle() const
 {
-    return m_Handle;
+    return m_WindowsHandle;
 }
 
-HDC WindowsWindow::GetDeviceContext() const
+HDC WindowsWindow::GetWindowsDeviceContext() const
 {
-    return GetDC(m_Handle);
+    return m_WindowsDeviceContext;
 }

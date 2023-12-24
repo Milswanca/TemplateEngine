@@ -5,6 +5,8 @@ class OpenGLDeviceContext : public RHIDeviceContext
 {
 public:
     OpenGLDeviceContext();
+
+    void* GetDeviceContext() override = 0;
 };
 
 class OpenGLRHIPlatform : public RHIPlatform

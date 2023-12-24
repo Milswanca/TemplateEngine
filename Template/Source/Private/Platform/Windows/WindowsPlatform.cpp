@@ -36,9 +36,9 @@ WindowsPlatform::WindowsPlatform() : Platform()
     }
 }
 
-void WindowsPlatform::BeginFrame()
+void WindowsPlatform::PlatformBeginFrame()
 {
-    Platform::BeginFrame();
+    Platform::PlatformBeginFrame();
 
     MSG Msg;
     while(PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE))
@@ -53,9 +53,9 @@ void WindowsPlatform::BeginFrame()
     }
 }
 
-void WindowsPlatform::EndFrame()
+void WindowsPlatform::PlatformEndFrame()
 {
-    Platform::EndFrame();
+    Platform::PlatformEndFrame();
 
     s_Engine->GetMainWindow()->SwapWindowBuffers();
 }

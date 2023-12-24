@@ -3,12 +3,13 @@
 
 extern class Platform* s_Platform;
 extern class Platform* CreatePlatform();
+extern void DeletePlatform(class Platform* InPlatform);
 
 class Platform
 {
 public:
-    virtual void BeginFrame() {};
-    virtual void EndFrame() {};
+    virtual void PlatformBeginFrame() {};
+    virtual void PlatformEndFrame() {};
     
     virtual Window* PlatformCreateWindow(const WindowDesc& InDesc) = 0;
     virtual void PlatformDestroyWindow(Window* InWindow) = 0;

@@ -42,3 +42,8 @@ const WindowDesc& Window::GetDescription() const
 {
     return m_WindowDescription;
 }
+
+RHIDeviceContext* Window::GetDeviceContext() const
+{
+    return m_DeviceContext;
+}

@@ -7,8 +7,8 @@ class WindowsPlatform : public Platform
 public:
     WindowsPlatform();
     
-    void BeginFrame() override;
-    void EndFrame() override;
+    void PlatformBeginFrame() override;
+    void PlatformEndFrame() override;
     
     Window* PlatformCreateWindow(const WindowDesc& InDesc) override;
     void PlatformDestroyWindow(Window* InWindow) override;

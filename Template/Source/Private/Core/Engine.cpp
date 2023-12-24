@@ -79,12 +79,12 @@ void Engine::Run()
 {
 	while (m_MainWindow != nullptr && !PlatformWantsShutdown())
 	{
-		RHIBeginFrame();
-		s_Platform->BeginFrame();
+		s_RHI->RHIBeginFrame();
+		s_Platform->PlatformBeginFrame();
 
 		m_CurrentWorld->TickWorld(0.0f);
 
-		RHIEndFrame();
-		s_Platform->EndFrame();
+		s_RHI->RHIEndFrame();
+		s_Platform->PlatformEndFrame();
 	}
 }

@@ -9,6 +9,7 @@ public:
     ~OpenGLWindowsDeviceContext();
 
     void MakeCurrent();
+    void* GetDeviceContext() override;
     
 private:
     HWND m_WindowHandle;

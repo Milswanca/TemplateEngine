@@ -13,10 +13,10 @@ class OpenGLRHI : public RHI
 public:
 	OpenGLRHI();
 	~OpenGLRHI();
-	
-	void RHISetViewport(int InX, int InY, int InWidth, int InHeight) override;
+
 	void RHIBeginFrame() override;
 	void RHIEndFrame() override;
+	void RHISetViewport(int InX, int InY, int InWidth, int InHeight) override;
 	void RHIDrawElements(int InNumIndices, int InOffset) override;
 	
 	RHIShaderProgram* RHICreateShaderProgram(RHIVertexShader* InVertexShader, RHIPixelShader* InPixelShader) override;

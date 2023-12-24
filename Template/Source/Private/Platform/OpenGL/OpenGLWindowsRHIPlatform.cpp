@@ -4,10 +4,24 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+typedef HGLRC WINAPI wglCreateContextAttribsARB_type(HDC hdc, HGLRC hShareContext, const int *attribList);
+wglCreateContextAttribsARB_type* wglCreateContextAttribsARB = nullptr;
+
+#define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
+#define WGL_CONTEXT_MINOR_VERSION_ARB 0x2092
+#define WGL_CONTEXT_PROFILE_MASK_ARB 0x9126
+#define WGL_CONTEXT_CORE_PROFILE_BIT_ARB 0x00000001
+
 OpenGLWindowsDeviceContext::OpenGLWindowsDeviceContext(HWND InWindowHandle, HDC InDeviceContext) : OpenGLDeviceContext()
-                                                                                                   , m_WindowHandle(InWindowHandle), m_DeviceContext(InDeviceContext)
+    , m_WindowHandle(InWindowHandle), m_DeviceContext(InDeviceContext)
 {
-    m_OpenGLContext = wglCreateContext(InDeviceContext);
+    int GLAttributes[] = {
+        WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
+        WGL_CONTEXT_MINOR_VERSION_ARB, 6,
+        WGL_CONTEXT_PROFILE_MASK_ARB,  WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+        0,
+    };
+    m_OpenGLContext = wglCreateContextAttribsARB(m_DeviceContext, 0, GLAttributes);
     DWORD Error = GetLastError();
 }
 
@@ -19,6 +33,11 @@ OpenGLWindowsDeviceContext::~OpenGLWindowsDeviceContext()
 void OpenGLWindowsDeviceContext::MakeCurrent()
 {
     wglMakeCurrent(m_DeviceContext, m_OpenGLContext);
+}
+
+void* OpenGLWindowsDeviceContext::GetDeviceContext()
+{
+    return m_DeviceContext;
 }
 
 OpenGLWindowsRHIPlatform::OpenGLWindowsRHIPlatform() : OpenGLRHIPlatform()
@@ -40,6 +59,9 @@ OpenGLWindowsRHIPlatform::OpenGLWindowsRHIPlatform() : OpenGLRHIPlatform()
         throw "Failed to init glad";
     }
 
+
+    wglCreateContextAttribsARB = (wglCreateContextAttribsARB_type*)wglGetProcAddress("wglCreateContextAttribsARB");
+    int Err = glGetError();
     glfwDestroyWindow(Window);
 }
 
@@ -51,7 +73,7 @@ OpenGLWindowsRHIPlatform::~OpenGLWindowsRHIPlatform()
 OpenGLDeviceContext* OpenGLWindowsRHIPlatform::RHIPlatformCreateOpenGLContext(Window* InWindow)
 {
     WindowsWindow* Window = static_cast<WindowsWindow*>(InWindow);
-    OpenGLWindowsDeviceContext* Context = new OpenGLWindowsDeviceContext(Window->GetHandle(), Window->GetDeviceContext());
+    OpenGLWindowsDeviceContext* Context = new OpenGLWindowsDeviceContext(Window->GetWindowsHandle(), Window->GetWindowsDeviceContext());
     
     return Context;
 }

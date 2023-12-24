@@ -17,13 +17,14 @@ enum class BufferTypes
 // Global RHI Pointer
 extern class RHI* s_RHI;
 extern class RHI* CreateRHI();
+extern void DeleteRHI(class RHI* InRHI);
 
 class RHI
 {
 public:
+	virtual void RHIBeginFrame() {};
+	virtual void RHIEndFrame() {};
 	virtual void RHISetViewport(int InX, int InY, int InWidth, int InHeight) = 0;
-	virtual void RHIBeginFrame() = 0;
-	virtual void RHIEndFrame() = 0;
 	virtual void RHIDrawElements(int InNumIndices, int InOffset) = 0;
 	
 	virtual RHIShaderProgram* RHICreateShaderProgram(RHIVertexShader* InVertexShader, RHIPixelShader* InPixelShader) = 0;
@@ -54,16 +55,6 @@ public:
 inline void RHISetViewport(int InX, int InY, int InWidth, int InHeight)
 {
 	s_RHI->RHISetViewport(InX, InY, InWidth, InHeight);	
-}
-
-inline void RHIBeginFrame()
-{
-	s_RHI->RHIBeginFrame();
-}
-
-inline void RHIEndFrame()
-{
-	s_RHI->RHIEndFrame();
 }
 
 inline void RHIDrawElements(int InNumElements, int InOffset)
